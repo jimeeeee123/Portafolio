@@ -1,5 +1,21 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-const projects = [
+
+interface ProjectItem {
+  number: string;
+  title: string;
+  category: string;
+  description: string;
+  background: string;
+  details: string;
+  links?: { label: string; url: string }[];
+  images?: { src: string; alt: string; caption?: string }[];
+  highlights?: string[];
+}
+
+const projects: ProjectItem[] = [
   {
     number: "01",
     title: "Regresión lineal",
@@ -7,6 +23,21 @@ const projects = [
     description:
       "Exploración de datos, identificación de relaciones e interpretación de resultados.",
     background: "#E7D7C3",
+    details:
+      "Análisis estadístico mediante regresión lineal para explorar tendencias, evaluar relaciones entre variables y comunicar los hallazgos de forma clara.",
+    links: [
+      {
+        label: "Abrir notebook en Google Colab",
+        url: "https://colab.research.google.com/drive/1dr9DL8yQDC4IylZUJWXTEiXl8ibLeFZ5?usp=sharing",
+      },
+    ],
+    images: [
+      {
+        src: "/imagenes/linea.png",
+        alt: "Gráfico y resultados de regresión lineal",
+        caption: "Evidencia visual del modelo de regresión lineal.",
+      },
+    ],
   },
   {
     number: "02",
@@ -15,6 +46,20 @@ const projects = [
     description:
       "Un reto de lógica y resolución de problemas mediante algoritmos y árboles de decisión.",
     background: "#D9DCCB",
+    details:
+      "Proyecto enfocado en lógica, recorridos y toma de decisiones dentro de un laberinto utilizando algoritmos y estructuras de decisión.",
+    images: [
+      {
+        src: "/imagenes/maze.png",
+        alt: "Vista del proyecto Laberinto - maze",
+        caption: "Recorrido y estructura del laberinto.",
+      },
+      {
+        src: "/imagenes/terror.png",
+        alt: "Vista del proyecto Laberinto - terror",
+        caption: "Escena y dinámica visual del proyecto.",
+      },
+    ],
   },
   {
     number: "03",
@@ -23,6 +68,21 @@ const projects = [
     description:
       "Exploración de K-Means y KNN para trabajar con datos y descubrir patrones.",
     background: "#E8CFC0",
+    details:
+      "Implementación y experimentación con algoritmos de aprendizaje automático (K-Means y KNN) para analizar conjuntos de datos y clasificar patrones.",
+    links: [
+      {
+        label: "Abrir notebook en Google Colab",
+        url: "https://colab.research.google.com/drive/1tPrG0bPvE_7vzIuuVUTei3cwAz4EzVaK?usp=sharing",
+      },
+    ],
+    images: [
+      {
+        src: "/imagenes/el otro.png",
+        alt: "Evidencia de AI Challenge",
+        caption: "Resultados y pruebas del reto de Machine Learning.",
+      },
+    ],
   },
   {
     number: "04",
@@ -31,6 +91,21 @@ const projects = [
     description:
       "Análisis de establecimientos y sus agrupaciones geográficas para explorar posibles ubicaciones comerciales.",
     background: "#D8D0C1",
+    details:
+      "Análisis geoespacial de 53 gasolineras registradas en Santa Ana (GasolinerasSantaAna.geojson), limpiando coordenadas y convirtiéndolas de EPSG:4326 a EPSG:32616 (UTM) para aplicar K-Means y clasificación geográfica con KNN (métrica Haversine).",
+    highlights: [
+      "Dataset limpio: 53 registros (0 duplicados exactos, 0 coordenadas faltantes).",
+      "K-Means con K = 2 (mejor silueta: 0.791): Cluster 0 con 47 gasolineras y Cluster 1 con 6 gasolineras.",
+      "Clasificación KNN (3 vecinos, distancia Haversine): 100% de exactitud promedio en validación cruzada (3 folds).",
+      "Caso Puma Chalchuapa (13.988085, -89.667435): asignado al Cluster 0 tanto por K-Means como por KNN; vecinos más cercanos: Texaco Chalchuapa (~0.738 km y ~0.740 km) y Uno (~0.985 km).",
+    ],
+    images: [
+      {
+        src: "/imagenes/mapa.png",
+        alt: "Mapa de análisis geográfico de gasolineras",
+        caption: "Visualización geográfica y agrupaciones del análisis.",
+      },
+    ],
   },
 ];
 
@@ -49,8 +124,6 @@ const skillGroups = [
       "Excel",
       "Power BI",
       "Kodular",
-      "Firebase",
-      "Arduino",
       "Git & GitHub",
     ],
   },
@@ -86,45 +159,94 @@ const skillGroups = [
   },
 ];
 
-const learningSkills = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-];
-
 const education = [
   {
     period: "2025",
     tag: "EDUCACIÓN MEDIA",
     title: "Bachillerato",
-    institution:
-      "Complejo Educativo Católico Fray Martín de Porres",
-    description:
-      "Estudios de bachillerato finalizados en 2025.",
+    institution: "Complejo Educativo Católico Fray Martín de Porres",
+    description: "Estudios de bachillerato finalizados en 2025.",
     icon: "01",
   },
   {
-    period: "FORMACIÓN COMPLEMENTARIA",
+    period: "2026",
     tag: "CENTRO ¡SUPÉRATE!",
     title: "Programa de formación",
-    institution: "Fundación Frech",
-    description:
-      "Experiencia formativa en inglés, informática y desarrollo de habilidades personales.",
+    institution: "Programa Empresarial Supérate Fundación Frech",
+    description: "Experiencia formativa en inglés, informática y valores.",
     icon: "02",
   },
   {
-    period: "APRENDIZAJE ACTUAL",
-    tag: "TECNOLOGÍA E INNOVACIÓN",
-    title: "Desarrollo web e inteligencia artificial",
-    institution: "Formación académica",
+    period: "2026",
+    tag: "CERTIFICACIONES",
+    title: "Certificaciones de ingles e informatica",
+    institution: "Centro Superate",
     description:
-      "Actualmente fortaleciendo mis conocimientos en desarrollo web con React, Next.js, TypeScript y Tailwind CSS, además de fundamentos de inteligencia artificial y Machine Learning.",
+      "Actualmente cuento con dos certificaciones, Microsoft Office Specialist Excel Expert(MOS) y TOEIC.",
     icon: "03",
   },
 ];
 
 export default function Home() {
+  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(
+    null
+  );
+  const [contactForm, setContactForm] = useState({
+    nombre: "",
+    email: "",
+    mensaje: "",
+  });
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSendingEmail(true);
+    setEmailStatus(null);
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/jime.duque17@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            _subject: `Nuevo mensaje desde el portafolio de ${contactForm.nombre}`,
+            Nombre: contactForm.nombre,
+            Email: contactForm.email,
+            Mensaje: contactForm.mensaje,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        setEmailStatus({
+          type: "success",
+          text: "¡Mensaje enviado! Gracias por escribirme, te responderé pronto.",
+        });
+        setContactForm({ nombre: "", email: "", mensaje: "" });
+      } else {
+        setEmailStatus({
+          type: "error",
+          text: "No se pudo enviar el mensaje. Inténtalo de nuevo en unos momentos.",
+        });
+      }
+    } catch {
+      setEmailStatus({
+        type: "error",
+        text: "Ocurrió un error de conexión al enviar tu mensaje.",
+      });
+    } finally {
+      setSendingEmail(false);
+    }
+  };
+
   return (
     <main
       id="inicio"
@@ -188,8 +310,8 @@ export default function Home() {
           </h1>
 
           <p className="mt-8 max-w-lg text-lg leading-8 text-[#76695E]">
-            Curiosidad para aprender, creatividad para construir.
-            Un espacio donde comparto mis proyectos, aprendizajes e ideas.
+            Curiosidad para aprender, creatividad para construir. Un espacio
+            donde comparto mis proyectos, aprendizajes e ideas.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">
@@ -227,19 +349,18 @@ export default function Home() {
             </span>
 
             {/* FOTOGRAFÍA PERSONAL */}
-<div className="absolute inset-0">
-  <Image
-    src="/imagenes/jimena.png"
-    alt="Fotografía de Jimena"
-    fill
-    priority
-    sizes="(max-width: 768px) 100vw, 448px"
-    className="object-cover object-center"
-  />
+            <div className="absolute inset-0">
+              <Image
+                src="/imagenes/jimena.png"
+                alt="Fotografía de Jimena"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 448px"
+                className="object-cover object-center"
+              />
 
-  {/* Capa suave para conservar la estética */}
-  <div className="absolute inset-0 bg-[#49382E]/10" />
-</div>
+              <div className="absolute inset-0 bg-[#49382E]/10" />
+            </div>
 
             <div className="absolute bottom-7 left-6 right-6 flex items-center justify-between rounded-2xl border border-white/40 bg-[#F5F0E8]/85 p-5 backdrop-blur-md">
               <div>
@@ -277,15 +398,17 @@ export default function Home() {
 
           <div>
             <p className="text-base leading-8 text-[#76695E]">
-              Soy una persona curiosa, responsable y empática.
-              Me gusta aprender cosas nuevas, explorar diferentes
-              herramientas y descubrir cómo transformar ideas en soluciones.
+              Actualmente soy estudiante del programa Supérate, en la universidad
+              voy a estudiar trabajo social ya que quiero dar oportunidades así
+              como me las dieron a mí. Así mismo me considero una persona
+              curiosa, responsable y empática. Me gusta aprender cosas nuevas,
+              explorar diferentes herramientas y descubrir cómo transformar ideas
+              en soluciones.
             </p>
 
             <p className="mt-5 text-base leading-8 text-[#76695E]">
-              Este espacio reúne parte de mi recorrido, los proyectos
-              en los que he trabajado y los conocimientos que sigo
-              construyendo.
+              Este espacio reúne parte de mi recorrido, los proyectos en los
+              que he trabajado y los conocimientos que sigo construyendo.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -305,10 +428,7 @@ export default function Home() {
       </section>
 
       {/* PROYECTOS */}
-      <section
-        id="proyectos"
-        className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
-      >
+      <section id="proyectos" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-5">
           <div>
             <p className="mb-4 text-xs tracking-[0.2em] text-[#A9674F]">
@@ -320,7 +440,7 @@ export default function Home() {
           </div>
 
           <p className="max-w-xs text-sm leading-6 text-[#8A7B6D]">
-            Ideas, retos y aprendizajes que se han convertido en experiencias.
+            Haz clic en cualquier apartado para ver enlaces, fotos y detalles.
           </p>
         </div>
 
@@ -328,7 +448,16 @@ export default function Home() {
           {projects.map((project) => (
             <article
               key={project.number}
-              className="group overflow-hidden rounded-2xl border border-[#DCD2C5] bg-[#FBF8F3] transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#49382E]/10"
+              onClick={() => setSelectedProject(project)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedProject(project);
+                }
+              }}
+              className="group cursor-pointer overflow-hidden rounded-2xl border border-[#DCD2C5] bg-[#FBF8F3] text-left transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#49382E]/10 focus:outline-none focus:ring-2 focus:ring-[#A9674F]"
             >
               <div
                 style={{ backgroundColor: project.background }}
@@ -342,7 +471,7 @@ export default function Home() {
                   {project.category}
                 </span>
 
-                <span className="absolute right-5 top-5 text-2xl text-[#49382E]/60">
+                <span className="absolute right-5 top-5 text-2xl text-[#49382E]/60 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#49382E]">
                   ↗
                 </span>
               </div>
@@ -353,18 +482,131 @@ export default function Home() {
                   {project.description}
                 </p>
                 <div className="mt-5 text-xs font-medium text-[#A9674F]">
-                  Proyecto académico →
+                  Ver detalles, enlaces y fotos →
                 </div>
               </div>
             </article>
           ))}
         </div>
-
-        <p className="mt-7 text-xs leading-6 text-[#8A7B6D]">
-          Esta es una primera presentación. Las evidencias, explicaciones,
-          tecnologías y resultados se incorporarán en cada proyecto.
-        </p>
       </section>
+
+      {/* MODAL DE DETALLE DE PROYECTO */}
+      {selectedProject && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#2E221B]/65 p-4 backdrop-blur-xs"
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-[#DCD2C5] bg-[#FBF8F3] p-6 text-[#49382E] shadow-2xl sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4 border-b border-[#E5DDD2] pb-5">
+              <div>
+                <span className="inline-block rounded-full bg-[#EFE6DA] px-3.5 py-1 text-[10px] font-medium tracking-[0.2em] text-[#A9674F]">
+                  {selectedProject.number} · {selectedProject.category}
+                </span>
+                <h3 className="mt-3 font-serif text-3xl sm:text-4xl">
+                  {selectedProject.title}
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedProject(null)}
+                aria-label="Cerrar ventana"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#CFC1B0] text-lg transition hover:bg-[#49382E] hover:text-[#F5F0E8]"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="mt-6 space-y-6">
+              <p className="text-sm leading-7 text-[#6E5F53] sm:text-base">
+                {selectedProject.details}
+              </p>
+
+              {selectedProject.highlights &&
+                selectedProject.highlights.length > 0 && (
+                  <div className="rounded-2xl border border-[#E3D8CA] bg-[#F5EFE6] p-5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#A9674F]">
+                      Resumen y resultados del análisis
+                    </p>
+                    <ul className="mt-3 space-y-2.5 text-sm leading-6 text-[#5C4D42]">
+                      {selectedProject.highlights.map((item) => (
+                        <li key={item} className="flex items-start gap-2.5">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#A9674F]" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+              {selectedProject.links && selectedProject.links.length > 0 && (
+                <div>
+                  <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8A7B6D]">
+                    Enlaces del proyecto
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedProject.links.map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full bg-[#49382E] px-5 py-2.5 text-xs font-medium text-[#F5F0E8] transition hover:bg-[#A9674F]"
+                      >
+                        {link.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedProject.images && selectedProject.images.length > 0 && (
+                <div>
+                  <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8A7B6D]">
+                    Evidencias y capturas
+                  </p>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    {selectedProject.images.map((img) => (
+                      <figure
+                        key={img.src}
+                        className="overflow-hidden rounded-2xl border border-[#E3D8CA] bg-[#F5EFE6]"
+                      >
+                        <div className="relative aspect-16/10 w-full bg-[#EAE2D6]">
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 360px"
+                            className="object-cover"
+                          />
+                        </div>
+                        {img.caption && (
+                          <figcaption className="px-4 py-3 text-xs text-[#76695E]">
+                            {img.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-8 flex justify-end border-t border-[#E5DDD2] pt-5">
+              <button
+                type="button"
+                onClick={() => setSelectedProject(null)}
+                className="rounded-full border border-[#49382E] px-6 py-2.5 text-xs font-medium transition hover:bg-[#49382E] hover:text-[#F5F0E8]"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MIS HABILIDADES */}
       <section
@@ -382,8 +624,8 @@ export default function Home() {
             </h2>
 
             <p className="mt-5 max-w-xl text-sm leading-7 text-[#76695E]">
-              Una combinación de conocimientos tecnológicos, curiosidad
-              por aprender y habilidades personales que sigo desarrollando.
+              Una combinación de conocimientos tecnológicos, curiosidad por
+              aprender y habilidades personales que sigo desarrollando.
             </p>
           </div>
 
@@ -402,9 +644,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                <h3 className="mt-7 font-serif text-2xl">
-                  {group.title}
-                </h3>
+                <h3 className="mt-7 font-serif text-2xl">{group.title}</h3>
 
                 <p className="mt-3 min-h-16 text-sm leading-6 text-[#87796D]">
                   {group.description}
@@ -423,47 +663,11 @@ export default function Home() {
               </article>
             ))}
           </div>
-
-          {/* EN APRENDIZAJE */}
-          <div className="mt-7 overflow-hidden rounded-2xl bg-[#49382E] p-7 text-[#F5F0E8] sm:p-9">
-            <div className="grid gap-6 md:grid-cols-[1fr_1.5fr] md:items-center">
-              <div>
-                <p className="text-[10px] tracking-[0.2em] text-[#D9A58D]">
-                  MI SIGUIENTE CAPÍTULO
-                </p>
-                <h3 className="mt-3 font-serif text-3xl">
-                  Siempre hay algo nuevo por aprender.
-                </h3>
-              </div>
-
-              <div>
-                <p className="mb-5 text-sm leading-7 text-[#D7C9BC]">
-                  Actualmente estoy aprendiendo y practicando nuevas
-                  herramientas para fortalecer mis conocimientos
-                  en desarrollo web.
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {learningSkills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="rounded-full border border-[#B7A393]/50 px-4 py-2 text-xs text-[#F5F0E8]"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* FORMACIÓN ACADÉMICA */}
-      <section
-        id="formacion"
-        className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
-      >
+      <section id="formacion" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
         <div className="mb-14">
           <p className="mb-4 text-xs tracking-[0.2em] text-[#A9674F]">
             04 / MI RECORRIDO
@@ -474,18 +678,17 @@ export default function Home() {
           </h2>
 
           <p className="mt-5 max-w-xl text-sm leading-7 text-[#76695E]">
-            Cada etapa representa una oportunidad para adquirir
-            conocimientos, descubrir intereses y seguir creciendo.
+            Cada etapa representa una oportunidad para adquirir conocimientos,
+            descubrir intereses y seguir creciendo.
           </p>
         </div>
 
         <div className="relative ml-3 border-l border-[#CDBDAA] md:ml-8">
-          {education.map((item, index) => (
+          {education.map((item) => (
             <article
               key={item.icon}
               className="group relative pb-12 pl-9 last:pb-0 md:pl-14"
             >
-              {/* PUNTO DE LA LÍNEA DE TIEMPO */}
               <span className="absolute -left-[9px] top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-[#A9674F] bg-[#F5F0E8] transition group-hover:bg-[#A9674F]" />
 
               <div className="rounded-2xl border border-[#DED3C5] bg-[#FBF8F3] p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#49382E]/10 sm:p-8">
@@ -494,9 +697,7 @@ export default function Home() {
                     {item.tag}
                   </span>
 
-                  <span className="text-xs text-[#998879]">
-                    {item.period}
-                  </span>
+                  <span className="text-xs text-[#998879]">{item.period}</span>
                 </div>
 
                 <div className="mt-6 flex items-start gap-4">
@@ -529,8 +730,8 @@ export default function Home() {
           </p>
 
           <p className="mt-4 max-w-3xl font-serif text-2xl italic leading-relaxed text-[#59483C] sm:text-3xl">
-            "El aprendizaje no termina con una etapa; cada experiencia
-            abre la puerta a nuevas posibilidades."
+            &ldquo;El aprendizaje no termina con una etapa; cada experiencia
+            abre la puerta a nuevas posibilidades.&rdquo;
           </p>
         </div>
       </section>
@@ -545,74 +746,148 @@ export default function Home() {
             05 / CONTACTO
           </p>
 
-          <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr] md:items-end">
+          <div className="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
             <div>
               <h2 className="max-w-2xl font-serif text-5xl leading-tight sm:text-6xl">
                 Las grandes ideas comienzan con una conversación.
               </h2>
 
               <p className="mt-6 max-w-lg text-sm leading-7 text-[#D7C9BC]">
-                Gracias por visitar mi portafolio. Me alegra poder
-                compartir un poco de mi recorrido y de todo lo que
-                sigo aprendiendo.
+                Gracias por visitar mi portafolio. Me alegra poder compartir un
+                poco de mi recorrido y de todo lo que sigo aprendiendo.
               </p>
+
+              <div className="mt-8 space-y-3 text-xs text-[#D7C9BC]">
+                <p>
+                  Correo directo:{" "}
+                  <a
+                    href="mailto:jime.duque17@gmail.com"
+                    className="underline decoration-[#D9A58D]/60 underline-offset-4 transition hover:text-white"
+                  >
+                    jime.duque17@gmail.com
+                  </a>
+                </p>
+                <p>
+                  Perfil profesional:{" "}
+                  <a
+                    href="https://www.tecoloco.com.sv/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-[#D9A58D]/60 underline-offset-4 transition hover:text-white"
+                  >
+                    Tecoloco ↗
+                  </a>
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              {/* CORREO */}
-              <a
-                href="mailto:jime.duque17@gmail.com?subject=Contacto%20desde%20mi%20portafolio"
-                className="group block rounded-2xl border border-[#A99887]/50 p-6 transition hover:border-[#D9A58D] hover:bg-white/5"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] tracking-[0.2em] text-[#D9A58D]">
-                    CORREO ELECTRÓNICO
-                  </span>
-                  <span className="text-xl transition group-hover:translate-x-1 group-hover:-translate-y-1">
-                    ↗
-                  </span>
+            {/* FORMULARIO DE CONTACTO POR EMAIL */}
+            <form
+              onSubmit={handleContactSubmit}
+              className="rounded-3xl border border-[#A99887]/40 bg-[#3A2B22] p-6 shadow-2xl shadow-black/20 sm:p-8"
+            >
+              <div className="space-y-5">
+                <div>
+                  <label
+                    htmlFor="contact-nombre"
+                    className="mb-2 block text-sm font-medium text-[#F5F0E8]"
+                  >
+                    Nombre
+                  </label>
+                  <input
+                    id="contact-nombre"
+                    type="text"
+                    required
+                    placeholder="Tu nombre"
+                    value={contactForm.nombre}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, nombre: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-[#7C6A5C] bg-[#2E211A] px-4 py-3 text-sm text-[#F5F0E8] placeholder-[#9D8C7D] transition focus:border-[#D9A58D] focus:outline-none"
+                  />
                 </div>
 
-                <p className="mt-4 break-all font-serif text-xl sm:text-2xl">
-                  jime.duque17@gmail.com
-                </p>
-
-                <p className="mt-2 text-xs text-[#C8B9AA]">
-                  Escríbeme directamente a mi correo.
-                </p>
-              </a>
-
-              {/* TECOLOCO */}
-              <a
-                href="https://www.tecoloco.com.sv/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block rounded-2xl border border-[#A99887]/50 p-6 transition hover:border-[#D9A58D] hover:bg-white/5"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] tracking-[0.2em] text-[#D9A58D]">
-                    PERFIL PROFESIONAL
-                  </span>
-                  <span className="text-xl transition group-hover:translate-x-1 group-hover:-translate-y-1">
-                    ↗
-                  </span>
+                <div>
+                  <label
+                    htmlFor="contact-email"
+                    className="mb-2 block text-sm font-medium text-[#F5F0E8]"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    placeholder="tu@email.com"
+                    value={contactForm.email}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, email: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-[#7C6A5C] bg-[#2E211A] px-4 py-3 text-sm text-[#F5F0E8] placeholder-[#9D8C7D] transition focus:border-[#D9A58D] focus:outline-none"
+                  />
                 </div>
 
-                <p className="mt-4 font-serif text-2xl">
-                  Tecoloco
-                </p>
+                <div>
+                  <label
+                    htmlFor="contact-mensaje"
+                    className="mb-2 block text-sm font-medium text-[#F5F0E8]"
+                  >
+                    Mensaje
+                  </label>
+                  <textarea
+                    id="contact-mensaje"
+                    rows={4}
+                    required
+                    placeholder="Cuéntame sobre tu proyecto o idea..."
+                    value={contactForm.mensaje}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, mensaje: e.target.value })
+                    }
+                    className="w-full resize-none rounded-xl border border-[#7C6A5C] bg-[#2E211A] px-4 py-3 text-sm text-[#F5F0E8] placeholder-[#9D8C7D] transition focus:border-[#D9A58D] focus:outline-none"
+                  />
+                </div>
 
-                <p className="mt-2 text-xs text-[#C8B9AA]">
-                  También puedes encontrarme en esta plataforma de empleo.
-                </p>
-              </a>
-            </div>
+                {emailStatus && (
+                  <p
+                    className={`rounded-xl px-4 py-3 text-xs leading-5 ${
+                      emailStatus.type === "success"
+                        ? "border border-[#78816B]/60 bg-[#78816B]/20 text-[#E6EBD9]"
+                        : "border border-[#D9A58D]/60 bg-[#A9674F]/25 text-[#F8DDD1]"
+                    }`}
+                  >
+                    {emailStatus.text}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={sendingEmail}
+                  className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#A9674F] px-6 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:bg-[#BD755B] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4"
+                    aria-hidden="true"
+                  >
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
+                  <span>{sendingEmail ? "Enviando..." : "Enviar mensaje"}</span>
+                </button>
+              </div>
+            </form>
           </div>
 
           <div className="mt-12 border-t border-[#766558] pt-7">
             <p className="text-xs leading-6 text-[#C8B9AA]">
-              Este portafolio es una muestra de mi aprendizaje,
-              mis proyectos y mi crecimiento personal.
+              Este portafolio es una muestra de mi aprendizaje, mis proyectos y
+              mi crecimiento personal.
             </p>
           </div>
         </div>
